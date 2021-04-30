@@ -28,3 +28,15 @@ export function faster(pokemonA: Pokemon, pokemonB: Pokemon) {
     }
     return pokemonB;
 }
+
+export async function fight(pokemonA: Pokemon, pokemonB: Pokemon): Promise<Pokemon> {
+    const first: Pokemon = faster(pokemonA, pokemonB);
+    const second: Pokemon = first === pokemonA ? pokemonB : pokemonA;
+    while (first.health > 0 && second.health > 0) {
+        first.attack(second);
+        if (second.health <= 0) return first;
+        second.attack(first);
+        console.log(first.name + ' => ' + first.health + ' VS ' + second.name + ' => ' + second.health);
+    }
+    return second;
+}
